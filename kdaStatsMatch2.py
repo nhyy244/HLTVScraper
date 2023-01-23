@@ -315,15 +315,10 @@ def getPlayersEks(URL):
 
 
 ################### TESTING OMRÅDE ############################################
-def  main():
-    matchStats("https://www.hltv.org/stats/matches/93987/g2-vs-natus-vincere")
-    # matchStats("https://www.hltv.org/stats/matches/mapstatsid/140861/natus-vincere-vs-faze")
-    # getPlayersEks("https://www.hltv.org/stats/matches/mapstatsid/140861/natus-vincere-vs-faze")
-    # matchStats("https://www.hltv.org/stats/matches/mapstatsid/149751/g2-vs-natus-vincere")
-    #getPlayersEks("https://www.hltv.org/stats/matches/93987/g2-vs-natus-vincere")if __name__ == "__matchStats__":¨
-
+def  main(URL):
+    matchStats(URL)
 if __name__ == "__main__":
-    main()
+    main("https://www.hltv.org/stats/matches/93987/g2-vs-natus-vincere")
 
 
 
