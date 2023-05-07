@@ -1,4 +1,7 @@
 # HLTVScraper
+**OBSOLETE**
+Not working anymore. Reason: HLTV added extra security measures making it much harder to scrape their website.
+
 Scraper for getting stats from HLTV
 
 
