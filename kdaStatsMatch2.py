@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import date
 import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import ghost
 
 from Player import Player
 
@@ -54,12 +57,13 @@ def matchStats(URL):
     global soupIndividualPlayer
 
 
-    page = requests.get(URL)
-    soup = BeautifulSoup(page.content, "html.parser")
+    dr = webdriver.Chrome()
+    dr.get(URL)
+    #page = requests.get(URL)
+    soup = BeautifulSoup(dr.page_source, "html.parser")
 
-    matchStats = soup.find_all("table", class_="stats-table")
+    matchStats = soup.find_all("div", class_="stats-content")
     mapName=soup.find("div",class_="match-info-box").text.strip().split("\n")[2]
-
     team1Name = matchStats[0].find("th", class_="st-teamname").text
     team2Name = matchStats[3].find("th", class_="st-teamname").text
 
@@ -79,6 +83,7 @@ def matchStats(URL):
 
     playerStatsTeam1 = matchStats[0].find_all("tr")
     playerStatsTeam1.pop(0)
+
     for i in range(len(playerStatsTeam1)):
         # finds the score
         playerKills = playerStatsTeam1[i].find("td", class_="st-kills")
@@ -137,7 +142,9 @@ def matchStats(URL):
               f"  EK: {playersTeam2[i].getPlayerEK()}")
     print("")
     print("#####################CLUTCHES#####################")
+    """
     getPlayersClutches(playersTeam1,playersTeam2)
+    """
     print("")
     print("#####################4ks#####################")
     print(team1Name)
@@ -225,8 +232,10 @@ def getPlayersClutches(playersTeam1,playersTeam2):  # URL IS THE MATCH URL
 
 
 def getSoup(URLSpecific):
-    page = requests.get(URLSpecific)
-    soup = BeautifulSoup(page.content, "html.parser")
+    dr = webdriver.Chrome()
+    dr.get(URLSpecific)
+    #page = requests.get(URLSpecific)
+    soup = BeautifulSoup(dr.page_source, "html.parser")
     return soup
 
 '''
@@ -318,7 +327,7 @@ def getPlayersEks(URL):
 def  main(URL):
     matchStats(URL)
 if __name__ == "__main__":
-    main("https://www.hltv.org/stats/matches/93987/g2-vs-natus-vincere")
+    main("https://www.hltv.org/stats/matches/95352/og-vs-00nation")
 
 
 

@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import date
 import time
+from selenium import webdriver
+
 
 _today = date.today() # "private" field
 
@@ -45,8 +47,10 @@ class Player:
         return self.clutchURLS
 
     def getSoup(self,URLSpecific):
-        page = requests.get(URLSpecific)
-        soup = BeautifulSoup(page.content, "html.parser")
+        #page = requests.get(URLSpecific)
+        dr = webdriver.Chrome()
+        dr.get(URLSpecific)
+        soup = BeautifulSoup(dr.page_source)
         return soup
 
     def setPlayerKills(self, kills):
@@ -79,7 +83,7 @@ class Player:
         #   BEGIN SCRAPING EK
         soup = self.getSoup(urlEK)
         overallStatsCol = soup.find_all("div", class_="stats-rows")
-        time.sleep(1)  # TIMEOUT TO NOT GET RATE LIMITED HAHAHAHHA FK U HLTV
+        time.sleep(1)
         standardBoxEk = overallStatsCol[0].find_all("div", class_="standard-box")
         playersEK = standardBoxEk[1].find_all("span")[1].text
 
@@ -94,7 +98,7 @@ class Player:
         #   BEGIN SCRAPING EK
         soup = self.getSoup(urlMultiKills)
         overallStatsCol = soup.find_all("div", class_="stats-rows")
-        time.sleep(1)  # TIMEOUT TO NOT GET RATE LIMITED HAHAHAHHA FK U HLTV
+        time.sleep(1) 
         standardBoxEk = overallStatsCol[1].find_all("div", class_="standard-box")
         if multiKillType == "4k":
             multiKill += standardBoxEk[0].find_all("span")[-3].text
